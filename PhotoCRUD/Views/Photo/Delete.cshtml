@@ -1,0 +1,60 @@
+﻿@model Photo
+
+@{
+	ViewData["Title"] = "Delete";
+}
+
+<h1>Do usunięcia</h1>
+
+<h3>Czy jesteś pewny że chcesz usunąć to zdjęcie?</h3>
+<div>
+	<h4>Photo</h4>
+	<hr/>
+	<dl class="row">
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Id)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Id)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.DateTimeTaken)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.DateTimeTaken)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Description)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Description)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Camera)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Camera)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.AuthorEmail)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.AuthorEmail)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Resolution)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Resolution)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Format)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Format)
+		</dd>
+	</dl>
+
+	<a asp-controller="Photo" asp-action="DeletePhoto" asp-route-id="@Model.Id">Usuń</a>
+	<a asp-action="Index">Powrót do listy</a>
+</div>

@@ -1,0 +1,116 @@
+﻿@model List<Address>
+@{
+	ViewData["Title"] = "Index";
+}
+
+<h1>Lista adresów</h1>
+
+<a class="btn btn-primary" asp-controller="Address" asp-action="Create">Dodaj nowy adres</a>
+
+<h2>Filtruj adresy</h2>
+<div class="row mb-3">
+	<div class="col-md-2">
+		<label for="filterStreet" class="form-label">Ulica:</label>
+		<input type="text" class="form-control" id="filterStreet">
+	</div>
+	<div class="col-md-2">
+		<label for="filterHouseNumber" class="form-label">Numer domu:</label>
+		<input type="text" class="form-control" id="filterHouseNumber">
+	</div>
+	<div class="col-md-2">
+		<label for="filterPostalCode" class="form-label">Kod pocztowy:</label>
+		<input type="text" class="form-control" id="filterPostalCode">
+	</div>
+	<div class="col-md-2">
+		<label for="filterCity" class="form-label">Miasto:</label>
+		<input type="text" class="form-control" id="filterCity">
+	</div>
+	<div class="col-md-2">
+		<label for="filterCountry" class="form-label">Kraj:</label>
+		<input type="text" class="form-control" id="filterCountry">
+	</div>
+</div>
+
+<table class="table">
+	<thead>
+	<tr>
+		<th>
+			Ulica
+		</th>
+		<th>
+			Numer domu
+		</th>
+		<th>
+			Kod pocztowy
+		</th>
+		<th>
+			Miasto
+		</th>
+		<th>
+			Kraj
+		</th>
+		<th>
+			Akcje
+		</th>
+	</tr>
+	</thead>
+	<tbody>
+	@foreach (var address in Model)
+	{
+		<tr>
+			<td>
+				@address.Street
+			</td>
+			<td>
+				@address.HouseNumber
+			</td>
+			<td>
+				@address.PostalCode
+			</td>
+			<td>
+				@address.City
+			</td>
+			<td>
+				@address.Country
+			</td>
+			<td>
+				<a asp-controller="Address" asp-action="Edit" asp-route-id="@address.Id">Edytuj</a>
+				<a asp-controller="Address" asp-action="Details" asp-route-id="@address.Id">Szczegóły</a>
+				<a asp-controller="Address" asp-action="Delete" asp-route-id="@address.Id">Usuń</a>
+			</td>
+		</tr>
+	}
+	</tbody>
+</table>
+
+@section Scripts {
+	<script>
+		function filterAddresses() {
+			var filterStreet = $("#filterStreet").val().toLowerCase();
+			var filterHouseNumber = $("#filterHouseNumber").val().toLowerCase();
+			var filterPostalCode = $("#filterPostalCode").val().toLowerCase();
+			var filterCity = $("#filterCity").val().toLowerCase();
+			var filterCountry = $("#filterCountry").val().toLowerCase();
+
+			$("tbody tr").filter(function () {
+				var street = $(this).find("td:nth-child(1)").text().toLowerCase();
+				var houseNumber = $(this).find("td:nth-child(2)").text().toLowerCase();
+				var postalCode = $(this).find("td:nth-child(3)").text().toLowerCase();
+				var city = $(this).find("td:nth-child(4)").text().toLowerCase();
+				var country = $(this).find("td:nth-child(5)").text().toLowerCase();
+
+				var streetMatch = street.indexOf(filterStreet) > -1 || filterStreet === "";
+				var houseNumberMatch = houseNumber.indexOf(filterHouseNumber) > -1 || filterHouseNumber === "";
+				var postalCodeMatch = postalCode.indexOf(filterPostalCode) > -1 || filterPostalCode === "";
+				var cityMatch = city.indexOf(filterCity) > -1 || filterCity === "";
+				var countryMatch = country.indexOf(filterCountry) > -1 || filterCountry === "";
+
+				$(this).toggle(streetMatch && houseNumberMatch && postalCodeMatch && cityMatch && countryMatch);
+			});
+		}
+
+		$(document).ready(function () {
+			$("#filterStreet, #filterHouseNumber, #filterPostalCode, #filterCity, #filterCountry").keyup(filterAddresses);
+		});
+	</script>
+}

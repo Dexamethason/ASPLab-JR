@@ -1,0 +1,28 @@
+﻿html { font-size: 14px; }
+
+@media (min-width: 768px) {
+    html { font-size: 16px; }
+}
+
+html {
+    min-height: 100%;
+    position: relative;
+}
+
+body { background-color: #eee8aa; }
+
+.navbar {
+    background-color: #d2691e;
+    border-radius: 20px;
+}
+
+.navbar-nav .nav-link { color: #d2691e; }
+
+.footer {
+    background-color: #ffffff;
+    border-radius: 10px;
+    color: #000000;
+    padding: 5px 0;
+}
+
+.navbar-toggler { border-color: #d2691e; }

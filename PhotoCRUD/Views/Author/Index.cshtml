@@ -1,0 +1,84 @@
+﻿@model IEnumerable<Author>
+
+@{
+	ViewData["Title"] = "Index";
+}
+
+<h1>Lista autorów</h1>
+
+<p>
+	<a asp-action="Create">Dodaj nowego autora</a>
+</p>
+
+<h2>Filtruj autorów</h2>
+<div class="row mb-3">
+	<div class="col-md-4">
+		<label for="filterFirstName" class="form-label">Imię:</label>
+		<input type="text" class="form-control" id="filterFirstName">
+	</div>
+	<div class="col-md-4">
+		<label for="filterSurname" class="form-label">Nazwisko:</label>
+		<input type="text" class="form-control" id="filterSurname">
+	</div>
+</div>
+
+<table class="table">
+	<thead>
+	<tr>
+		<th>
+			@Html.DisplayNameFor(model => model.Id)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.FirstName)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Surname)
+		</th>
+		<th></th>
+	</tr>
+	</thead>
+	<tbody>
+	@foreach (var item in Model)
+	{
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.Id)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.FirstName)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Surname)
+			</td>
+			<td>
+				<a asp-controller="Author" asp-action="Edit" asp-route-id="@item.Id">Edytuj</a>
+				<a asp-controller="Author" asp-action="Details" asp-route-id="@item.Id">Szczegóły</a>
+				<a asp-controller="Author" asp-action="Delete" asp-route-id="@item.Id">Usuń</a>
+			</td>
+		</tr>
+	}
+	</tbody>
+</table>
+
+@section Scripts {
+	<script>
+		function filterAuthors() {
+			var filterFirstName = $("#filterFirstName").val().toLowerCase();
+			var filterSurname = $("#filterSurname").val().toLowerCase();
+
+			$("tbody tr").filter(function () {
+				var firstName = $(this).find("td:nth-child(2)").text().toLowerCase();
+				var surname = $(this).find("td:nth-child(3)").text().toLowerCase();
+
+				var firstNameMatch = firstName.indexOf(filterFirstName) > -1 || filterFirstName === "";
+				var surnameMatch = surname.indexOf(filterSurname) > -1 || filterSurname === "";
+
+				$(this).toggle(firstNameMatch && surnameMatch);
+			});
+		}
+
+		$(document).ready(function () {
+			$("#filterFirstName, #filterSurname").keyup(filterAuthors);
+		});
+	</script>
+}

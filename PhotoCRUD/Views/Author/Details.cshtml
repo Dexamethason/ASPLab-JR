@@ -1,0 +1,148 @@
+﻿@model Author
+
+@{
+	ViewData["Title"] = "Informacje o autorze";
+}
+
+<h1>Informacje</h1>
+
+<div>
+	<h4>Autor</h4>
+	<hr/>
+	<dl class="row">
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.FirstName)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.FirstName)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Surname)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Surname)
+		</dd>
+	</dl>
+</div>
+<h4>Zdjęcia autora</h4>
+<table class="table">
+	<thead>
+	<tr>
+		<th>
+			@Html.DisplayNameFor(model => model.Photos!.First().Id)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Photos!.First().DateTimeTaken)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Photos!.First().Description)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Photos!.First().Camera)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Photos!.First().AuthorEmail)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Photos!.First().Resolution)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Photos!.First().Format)
+		</th>
+		<th></th>
+	</tr>
+	</thead>
+	<tbody>
+	@foreach (var item in Model.Photos!)
+	{
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.Id)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.DateTimeTaken)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Description)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Camera)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.AuthorEmail)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Resolution)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Format)
+			</td>
+			<td>
+				<a asp-controller="Photo" asp-action="Edit" asp-route-id="@item.Id">Edytuj</a>
+				<a asp-controller="Photo" asp-action="Details" asp-route-id="@item.Id">Szczegóły</a>
+				<a asp-controller="Photo" asp-action="Delete" asp-route-id="@item.Id">Usuń</a>
+			</td>
+		</tr>
+	}
+	</tbody>
+</table>
+<h4>Adresy autora</h4>
+<table class="table">
+	<thead>
+	<tr>
+		<th>
+			@Html.DisplayNameFor(model => model.Adresses!.First().Id)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Adresses!.First().Street)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Adresses!.First().HouseNumber)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Adresses!.First().PostalCode)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Adresses!.First().City)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Adresses!.First().Country)
+		</th>
+		<th></th>
+	</tr>
+	</thead>
+	<tbody>
+	@foreach (var item in Model.Adresses!)
+	{
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.Id)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Street)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.HouseNumber)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.PostalCode)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.City)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Country)
+			</td>
+			<td>
+				<a asp-controller="Address" asp-action="Edit" asp-route-id="@item.Id">Edytuj</a>
+				<a asp-controller="Address" asp-action="Details" asp-route-id="@item.Id">Szczegóły</a>
+				<a asp-controller="Address" asp-action="Delete" asp-route-id="@item.Id">Usuń</a>
+			</td>
+		</tr>
+	}
+	</tbody>
+</table>
+<div>
+	<a asp-controller="Author" asp-action="Edit" asp-route-id="@Model.Id">Edytuj</a>
+	<a asp-action="Index">Powrót do listy</a>
+</div>

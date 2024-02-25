@@ -1,0 +1,129 @@
+﻿@model IEnumerable<Photo>
+
+@{
+	ViewData["Title"] = "Lista zdjęć";
+}
+
+<h1>Lista zdjęć</h1>
+
+<p>
+	<a asp-action="Create">Dodaj nowe zdjęcie</a>
+</p>
+
+<h2>Filtruj zdjęcia</h2>
+<div class="row mb-3">
+	<div class="col-md-2">
+		<label for="filterDateTimeTaken" class="form-label">Data wykonania:</label>
+		<input type="text" class="form-control" id="filterDateTimeTaken">
+	</div>
+	<div class="col-md-4">
+		<label for="filterDescription" class="form-label">Opis:</label>
+		<input type="text" class="form-control" id="filterDescription">
+	</div>
+	<div class="col-md-2">
+		<label for="filterCamera" class="form-label">Aparat:</label>
+		<input type="text" class="form-control" id="filterCamera">
+	</div>
+	<div class="col-md-2">
+		<label for="filterAuthorEmail" class="form-label">Email autora:</label>
+		<input type="text" class="form-control" id="filterAuthorEmail">
+	</div>
+	<div class="col-md-2">
+		<label for="filterFormat" class="form-label">Format:</label>
+		<input type="text" class="form-control" id="filterFormat">
+	</div>
+</div>
+
+<table class="table">
+	<thead>
+	<tr>
+		<th>
+			@Html.DisplayNameFor(model => model.Id)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.DateTimeTaken)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Description)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Camera)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.AuthorEmail)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Resolution)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Format)
+		</th>
+		<th></th>
+	</tr>
+	</thead>
+	<tbody>
+	@foreach (var item in Model)
+	{
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.Id)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.DateTimeTaken)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Description)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Camera)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.AuthorEmail)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Resolution)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Format)
+			</td>
+			<td>
+				<a asp-controller="Photo" asp-action="Edit" asp-route-id="@item.Id">Edytuj</a>
+				<a asp-controller="Photo" asp-action="Details" asp-route-id="@item.Id">Szczegóły</a>
+				<a asp-controller="Photo" asp-action="Delete" asp-route-id="@item.Id">Usuń</a>
+			</td>
+		</tr>
+	}
+	</tbody>
+</table>
+
+@section Scripts {
+	<script>
+		function filterPhotos() {
+			var filterDateTimeTaken = $("#filterDateTimeTaken").val().toLowerCase();
+			var filterDescription = $("#filterDescription").val().toLowerCase();
+			var filterCamera = $("#filterCamera").val().toLowerCase();
+			var filterAuthorEmail = $("#filterAuthorEmail").val().toLowerCase();
+			var filterFormat = $("#filterFormat").val().toLowerCase();
+
+			$("tbody tr").filter(function () {
+				var dateTimeTaken = $(this).find("td:nth-child(2)").text().toLowerCase();
+				var description = $(this).find("td:nth-child(3)").text().toLowerCase();
+				var camera = $(this).find("td:nth-child(4)").text().toLowerCase();
+				var authorEmail = $(this).find("td:nth-child(5)").text().toLowerCase();
+				var format = $(this).find("td:nth-child(7)").text().toLowerCase();
+
+				var dateTimeTakenMatch = dateTimeTaken.indexOf(filterDateTimeTaken) > -1 || filterDateTimeTaken === "";
+				var descriptionMatch = description.indexOf(filterDescription) > -1 || filterDescription === "";
+				var cameraMatch = camera.indexOf(filterCamera) > -1 || filterCamera === "";
+				var authorEmailMatch = authorEmail.indexOf(filterAuthorEmail) > -1 || filterAuthorEmail === "";
+				var formatMatch = format.indexOf(filterFormat) > -1 || filterFormat === "";
+
+				$(this).toggle(dateTimeTakenMatch && descriptionMatch && cameraMatch && authorEmailMatch && formatMatch);
+			});
+		}
+
+		$(document).ready(function () {
+			$("#filterDateTimeTaken, #filterDescription, #filterCamera, #filterAuthorEmail, #filterFormat").keyup(filterPhotos);
+		});
+	</script>
+}
